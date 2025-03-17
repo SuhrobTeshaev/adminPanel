@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -19,17 +19,25 @@ import {
   Clock,
   ChevronLeft,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   collapsed?: boolean;
   onToggle?: () => void;
+  handleLogout: () => void;
 }
 
-const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
+const Sidebar = ({
+  collapsed = false,
+  onToggle = () => {},
+  handleLogout,
+}: SidebarProps) => {
   const location = useLocation();
   const [expanded, setExpanded] = React.useState(!collapsed);
+
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setExpanded(!expanded);
@@ -52,11 +60,15 @@ const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
     { icon: <Settings size={20} />, label: "Settings", path: "/settings" },
   ];
 
+  function setIsAuthenticated(arg0: boolean) {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <aside
       className={cn(
         "h-full bg-slate-800 text-white transition-all duration-300 flex flex-col",
-        expanded ? "w-64" : "w-16",
+        expanded ? "w-64" : "w-16"
       )}
     >
       <div className="p-4 flex items-center justify-between border-b border-slate-700">
@@ -86,7 +98,7 @@ const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
                           className={cn(
                             "w-full justify-start text-white hover:bg-slate-700",
                             isActive ? "bg-slate-700" : "",
-                            expanded ? "px-4" : "px-0 justify-center",
+                            expanded ? "px-4" : "px-0 justify-center"
                           )}
                         >
                           <span className="mr-2">{item.icon}</span>
@@ -106,11 +118,14 @@ const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
       </nav>
 
       <div className="p-4 border-t border-slate-700 flex justify-center">
-        {expanded ? (
-          <div className="text-sm text-slate-400">Admin Dashboard v1.0</div>
-        ) : (
-          <div className="text-sm text-slate-400">v1.0</div>
-        )}
+        <Button
+          variant="outline"
+          className="w-full justify-start text-black border-white hover:bg-slate-700"
+          onClick={handleLogout}
+        >
+          <LogOut className="mr-2 h-5 w-5" />
+          {expanded && <span>Выход</span>}
+        </Button>
       </div>
     </aside>
   );

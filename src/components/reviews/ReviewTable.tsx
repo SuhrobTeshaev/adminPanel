@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
-import { format } from "date-fns";
-
 import {
   Table,
   TableBody,
@@ -10,8 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import UserStatusBadge from "./UserStatusBadge";
-import UserActionMenu from "./UserActionMenu";
+import ReviewRow from "./ReviewRow";
 
 type SortDirection = "asc" | "desc" | null;
 
@@ -20,31 +17,31 @@ interface SortState {
   direction: SortDirection;
 }
 
-interface User {
+interface Review {
   id: string;
-  name: string;
-  phone: string;
-  email: string;
-  accountType: string;
-  registrationDate: Date;
-  status: "confirmed" | "pending" | "rejected" | "blocked" | "trusted";
+  product: string;
+  rating: number;
+  text: string;
+  date: string;
+  user: string;
+  status: "Опубликован" | "Ожидает модерации" | "Отклонен";
 }
 
-interface UsersTableProps {
-  users?: User[];
+interface ReviewTableProps {
+  reviews?: Review[];
   onSort?: (column: string, direction: SortDirection) => void;
   currentPage?: number;
   totalPages?: number;
   onPageChange?: (page: number) => void;
 }
 
-const UsersTable = ({
-  users = [],
+const ReviewTable = ({
+  reviews = [],
   onSort = () => {},
   currentPage = 1,
   totalPages = 5,
   onPageChange = () => {},
-}: UsersTableProps) => {
+}: ReviewTableProps) => {
   const [sortState, setSortState] = useState<SortState>({
     column: null,
     direction: null,
@@ -82,7 +79,7 @@ const UsersTable = ({
   };
 
   return (
-    <div className="bg-white rounded-md shadow">
+    <div className="bg-white rounded-md ">
       <Table>
         <TableHeader>
           <TableRow>
@@ -94,33 +91,33 @@ const UsersTable = ({
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("name")}
+              onClick={() => handleSort("product")}
             >
-              ФИО {renderSortIcon("name")}
+              Товар или услуга {renderSortIcon("product")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("phone")}
+              onClick={() => handleSort("rating")}
             >
-              Телефон {renderSortIcon("phone")}
+              Оценка {renderSortIcon("rating")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("email")}
+              onClick={() => handleSort("text")}
             >
-              Email {renderSortIcon("email")}
+              Текст отзыва {renderSortIcon("text")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("accountType")}
+              onClick={() => handleSort("date")}
             >
-              Тип аккаунта {renderSortIcon("accountType")}
+              Дата регистрации {renderSortIcon("date")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("registrationDate")}
+              onClick={() => handleSort("user")}
             >
-              Дата регистрации {renderSortIcon("registrationDate")}
+              Пользователь {renderSortIcon("user")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
@@ -132,23 +129,8 @@ const UsersTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.accountType}</TableCell>
-              <TableCell>
-                {format(user.registrationDate, "dd.MM.yyyy")}
-              </TableCell>
-              <TableCell>
-                <UserStatusBadge status={user.status} />
-              </TableCell>
-              <TableCell>
-                <UserActionMenu userId={user.id} />
-              </TableCell>
-            </TableRow>
+          {reviews.map((review) => (
+            <ReviewRow key={review.id} review={review} />
           ))}
         </TableBody>
       </Table>
@@ -180,4 +162,4 @@ const UsersTable = ({
   );
 };
 
-export default UsersTable;
+export default ReviewTable;

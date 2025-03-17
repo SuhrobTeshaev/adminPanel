@@ -23,7 +23,7 @@ const UserManagement = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(
-    null,
+    null
   );
 
   // Mock data for users
@@ -129,46 +129,46 @@ const UserManagement = ({
                   New User
                 </TabsTrigger>
               </TabsList>
+              <TabsContent value="all-users" className="mt-0">
+                <div className="space-y-4">
+                  {/* Filters Section */}
+                  <UserFilters
+                    onSearch={handleSearch}
+                    onDateRangeChange={handleDateRangeChange}
+                    onStatusChange={handleStatusChange}
+                    onClear={handleClearFilters}
+                  />
+
+                  {/* Users Table */}
+                  <UsersTable
+                    users={mockUsers}
+                    onSort={handleSort}
+                    currentPage={currentPage}
+                    totalPages={5}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="new-user" className="mt-0">
+                <div className="rounded-md border border-gray-200 p-6">
+                  <h3 className="text-lg font-medium">Add New User</h3>
+                  <p className="text-sm text-gray-500 mt-1 mb-4">
+                    This section will contain a form to add new users to the
+                    system.
+                  </p>
+                  {/* Placeholder for new user form */}
+                  <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-md">
+                    <p className="text-gray-500">
+                      New user form will be implemented here
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
             </Tabs>
           </div>
         </CardHeader>
-        <CardContent>
-          <TabsContent value="all-users" className="mt-0">
-            <div className="space-y-4">
-              {/* Filters Section */}
-              <UserFilters
-                onSearch={handleSearch}
-                onDateRangeChange={handleDateRangeChange}
-                onStatusChange={handleStatusChange}
-                onClear={handleClearFilters}
-              />
-
-              {/* Users Table */}
-              <UsersTable
-                users={mockUsers}
-                onSort={handleSort}
-                currentPage={currentPage}
-                totalPages={5}
-                onPageChange={handlePageChange}
-              />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="new-user" className="mt-0">
-            <div className="rounded-md border border-gray-200 p-6">
-              <h3 className="text-lg font-medium">Add New User</h3>
-              <p className="text-sm text-gray-500 mt-1 mb-4">
-                This section will contain a form to add new users to the system.
-              </p>
-              {/* Placeholder for new user form */}
-              <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-md">
-                <p className="text-gray-500">
-                  New user form will be implemented here
-                </p>
-              </div>
-            </div>
-          </TabsContent>
-        </CardContent>
+        <CardContent>{/* Other content can go here */}</CardContent>
       </Card>
     </div>
   );

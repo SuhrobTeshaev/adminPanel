@@ -1,30 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminLayout from "../layout/AdminLayout";
+import ReviewTable from "./ReviewTable";
+import ReviewFilter from "./ReviewFilter";
+
 
 const ReviewsPage = () => {
-  return (
-    <AdminLayout defaultTitle="Reviews">
-      <div className="space-y-6">
-        <h2 className="text-3xl font-bold tracking-tight">
-          Reviews Management
-        </h2>
-        <p className="text-muted-foreground">
-          Manage user reviews and ratings.
-        </p>
+  const [filteredReviews, setFilteredReviews] = useState([
+    {
+      id: "0125136",
+      product: "Беспроводные наушники",
+      rating: 4,
+      text: "Отличный продукт! Полностью доволен.",
+      date: "04.03.2025",
+      user: "Муродов Азиз Хабибович",
+      status: "Опубликован" as "Опубликован" | "Ожидает модерации" | "Отклонен",
+    },
+    // Добавьте больше отзывов здесь
+  ]);
 
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Reviews List</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            This section will contain the reviews management interface.
-          </p>
-          <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-md">
-            <p className="text-gray-500">
-              Reviews management interface will be implemented here
-            </p>
-          </div>
-        </div>
+  const handleSearch = (query: string) => {
+    // Реализуйте логику поиска здесь
+    console.log("Search query:", query);
+  };
+
+  return (
+  
+      <div className="space-y-6 bg-white rounded-2xl p-6">
+        
+        <ReviewFilter onSearch={handleSearch} />
+        <ReviewTable reviews={filteredReviews} />
       </div>
-    </AdminLayout>
+   
   );
 };
 

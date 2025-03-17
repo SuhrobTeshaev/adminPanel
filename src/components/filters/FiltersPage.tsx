@@ -3,7 +3,7 @@ import AdminLayout from "../layout/AdminLayout";
 
 const FiltersPage = () => {
   return (
-    <AdminLayout defaultTitle="Filters">
+    // <AdminLayout defaultTitle="Filters">
       <div className="space-y-6">
         <h2 className="text-3xl font-bold tracking-tight">
           Filters Configuration
@@ -24,7 +24,7 @@ const FiltersPage = () => {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    // </AdminLayout>
   );
 };
 

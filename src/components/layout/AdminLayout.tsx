@@ -6,11 +6,13 @@ import Header from "./Header";
 interface AdminLayoutProps {
   children?: React.ReactNode;
   defaultTitle?: string;
+  handleLogout: () => void;
 }
 
 const AdminLayout = ({
   children,
   defaultTitle = "Dashboard",
+  handleLogout,
 }: AdminLayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [pageTitle, setPageTitle] = useState(defaultTitle);
@@ -21,7 +23,11 @@ const AdminLayout = ({
 
   return (
     <div className="flex h-screen w-full bg-gray-50">
-      <Sidebar collapsed={sidebarCollapsed} onToggle={handleSidebarToggle} />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggle={handleSidebarToggle}
+        handleLogout = {handleLogout}
+      />
 
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header title={pageTitle} />

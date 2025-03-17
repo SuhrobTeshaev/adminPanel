@@ -3,7 +3,7 @@ import AdminLayout from "../layout/AdminLayout";
 
 const SettingsPage = () => {
   return (
-    <AdminLayout defaultTitle="Settings">
+    // <AdminLayout defaultTitle="Settings">
       <div className="space-y-6">
         <h2 className="text-3xl font-bold tracking-tight">System Settings</h2>
         <p className="text-muted-foreground">
@@ -22,7 +22,7 @@ const SettingsPage = () => {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    // </AdminLayout>
   );
 };
 

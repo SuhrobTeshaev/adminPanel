@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
-import { format } from "date-fns";
-
 import {
   Table,
   TableBody,
@@ -10,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import UserStatusBadge from "./UserStatusBadge";
-import UserActionMenu from "./UserActionMenu";
+import ListingRow from "./ListingRow";
+
 
 type SortDirection = "asc" | "desc" | null;
 
@@ -20,31 +18,31 @@ interface SortState {
   direction: SortDirection;
 }
 
-interface User {
+interface Listing {
   id: string;
-  name: string;
-  phone: string;
-  email: string;
-  accountType: string;
-  registrationDate: Date;
-  status: "confirmed" | "pending" | "rejected" | "blocked" | "trusted";
+  product: string;
+  image: string;
+  category: string;
+  price: number;
+  status: "Опубликован" | "Ожидает модерации" | "Отклонен";
+  author: string;
 }
 
-interface UsersTableProps {
-  users?: User[];
+interface ListingTableProps {
+  listings?: Listing[];
   onSort?: (column: string, direction: SortDirection) => void;
   currentPage?: number;
   totalPages?: number;
   onPageChange?: (page: number) => void;
 }
 
-const UsersTable = ({
-  users = [],
+const ListingTable = ({
+  listings = [],
   onSort = () => {},
   currentPage = 1,
   totalPages = 5,
   onPageChange = () => {},
-}: UsersTableProps) => {
+}: ListingTableProps) => {
   const [sortState, setSortState] = useState<SortState>({
     column: null,
     direction: null,
@@ -82,7 +80,7 @@ const UsersTable = ({
   };
 
   return (
-    <div className="bg-white rounded-md shadow">
+    <div className="bg-white rounded-md ">
       <Table>
         <TableHeader>
           <TableRow>
@@ -94,33 +92,21 @@ const UsersTable = ({
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("name")}
+              onClick={() => handleSort("product")}
             >
-              ФИО {renderSortIcon("name")}
+              Товар или услуга {renderSortIcon("product")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("phone")}
+              onClick={() => handleSort("category")}
             >
-              Телефон {renderSortIcon("phone")}
+              Категория {renderSortIcon("category")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
-              onClick={() => handleSort("email")}
+              onClick={() => handleSort("price")}
             >
-              Email {renderSortIcon("email")}
-            </TableHead>
-            <TableHead
-              className="cursor-pointer"
-              onClick={() => handleSort("accountType")}
-            >
-              Тип аккаунта {renderSortIcon("accountType")}
-            </TableHead>
-            <TableHead
-              className="cursor-pointer"
-              onClick={() => handleSort("registrationDate")}
-            >
-              Дата регистрации {renderSortIcon("registrationDate")}
+              Цена (TJS) {renderSortIcon("price")}
             </TableHead>
             <TableHead
               className="cursor-pointer"
@@ -128,27 +114,18 @@ const UsersTable = ({
             >
               Статус {renderSortIcon("status")}
             </TableHead>
+            <TableHead
+              className="cursor-pointer"
+              onClick={() => handleSort("author")}
+            >
+              Автор {renderSortIcon("author")}
+            </TableHead>
             <TableHead>Действия</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.accountType}</TableCell>
-              <TableCell>
-                {format(user.registrationDate, "dd.MM.yyyy")}
-              </TableCell>
-              <TableCell>
-                <UserStatusBadge status={user.status} />
-              </TableCell>
-              <TableCell>
-                <UserActionMenu userId={user.id} />
-              </TableCell>
-            </TableRow>
+          {listings.map((listing) => (
+            <ListingRow key={listing.id} listing={listing} />
           ))}
         </TableBody>
       </Table>
@@ -180,4 +157,4 @@ const UsersTable = ({
   );
 };
 
-export default UsersTable;
+export default ListingTable;

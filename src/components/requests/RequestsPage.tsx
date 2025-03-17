@@ -3,7 +3,7 @@ import AdminLayout from "../layout/AdminLayout";
 
 const RequestsPage = () => {
   return (
-    <AdminLayout defaultTitle="Requests">
+    // <AdminLayout defaultTitle="Requests">
       <div className="space-y-6">
         <h2 className="text-3xl font-bold tracking-tight">
           Requests Management
@@ -24,7 +24,7 @@ const RequestsPage = () => {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    // </AdminLayout>
   );
 };
 
